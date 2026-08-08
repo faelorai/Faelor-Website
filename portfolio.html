@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAELOR | Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand">FAELOR</div>
+      <nav class="site-nav">
+        <a href="company.html">Company</a>
+        <a href="services.html">Services</a>
+        <a href="industry.html">Industry</a>
+        <a href="products.html">Products</a>
+        <a href="portfolio.html">Portfolio</a>
+      </nav>
+      <a class="connect-button" href="contact.html">Contact</a>
+    </header>
+
+    <div class="page-track" aria-hidden="true">
+      <span class="page-track-item">1</span>
+      <span class="page-track-item">2</span>
+      <span class="page-track-item">3</span>
+      <span class="page-track-item">4</span>
+      <span class="page-track-item active">5</span>
+    </div>
+    <main class="coming-soon-page">
+      <div class="coming-soon-panel">
+        <p class="eyebrow">Portfolio</p>
+        <h1>Our Work</h1>
+        <p class="description">Explore selected projects and showcase work highlighting our web, app, and automation expertise.</p>
+      </div>
+    </main>
+  </div>
+  <script>
+    (function() {
+      var pages = ["company.html", "services.html", "industry.html", "products.html", "portfolio.html"];
+      var file = window.location.pathname.split("/").pop();
+      var current = pages.indexOf(file);
+      if (current === -1) return;
+      var lastScroll = 0;
+      var scrollDelta = 0;
+      var scrollTimeout = null;
+      function go(dir) {
+        var next = current + dir;
+        if (next >= 0 && next < pages.length) {
+          document.body.classList.add("fade-out");
+          setTimeout(function() {
+            window.location.href = pages[next];
+          }, 260);
+        }
+      }
+      function resetScroll() {
+        scrollDelta = 0;
+        scrollTimeout = null;
+      }
+      window.addEventListener("wheel", function(e) {
+        if (Date.now() - lastScroll < 800) return;
+        scrollDelta += e.deltaY;
+        if (Math.abs(scrollDelta) >= 280) {
+          lastScroll = Date.now();
+          go(scrollDelta > 0 ? 1 : -1);
+          resetScroll();
+          return;
+        }
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(resetScroll, 400);
+      }, { passive: true });
+      var touchStartY = 0;
+      window.addEventListener("touchstart", function(e) {
+        if (e.touches.length === 1) touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      window.addEventListener("touchend", function(e) {
+        var dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dy) < 160) return;
+        if (Date.now() - lastScroll < 800) return;
+        lastScroll = Date.now();
+        go(dy < 0 ? 1 : -1);
+      }, { passive: true });
+    })();
+  </script>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">FAELOR</div>
+      <div class="footer-line" aria-hidden></div>
+      <div class="footer-meta">
+        <div class="footer-copy">© 2026 FAELOR</div>
+        <nav class="footer-links" aria-label="Footer links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms &amp; Conditions</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

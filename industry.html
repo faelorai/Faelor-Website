@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAELOR | Industry</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand">FAELOR</div>
+      <nav class="site-nav">
+        <a href="company.html">Company</a>
+        <a href="services.html">Services</a>
+        <a href="industry.html">Industry</a>
+        <a href="products.html">Products</a>
+        <a href="portfolio.html">Portfolio</a>
+      </nav>
+      <a class="connect-button" href="contact.html">Contact</a>
+    </header>
+
+    <div class="page-track" aria-hidden="true">
+      <span class="page-track-item">1</span>
+      <span class="page-track-item">2</span>
+      <span class="page-track-item active">3</span>
+      <span class="page-track-item">4</span>
+      <span class="page-track-item">5</span>
+    </div>
+    <main class="industry-page">
+      <section class="industry-hero">
+        <div class="industry-copy">
+          <p class="eyebrow">Industries</p>
+          <h1>Software engineered for the way you work.</h1>
+          <p>Every industry has unique challenges. We build AI-powered systems that solve real operational problems and drive measurable growth.</p>
+        </div>
+      </section>
+
+      <section class="industry-showcase">
+        <div class="industry-grid">
+          <article class="industry-card industry-card-1">
+            <div class="industry-card-icon">🦷</div>
+            <h3>Dental & Healthcare</h3>
+            <p>AI receptionist, appointment automation, patient communication, and clinic management for better care and higher efficiency.</p>
+            <a href="#">Explore Solutions →</a>
+          </article>
+          <article class="industry-card industry-card-2">
+            <div class="industry-card-icon">💼</div>
+            <h3>Professional Services</h3>
+            <p>Streamline client onboarding, case management, document automation and workflows for law firms, consultancies, agencies and more.</p>
+            <a href="#">Explore Solutions →</a>
+          </article>
+          <article class="industry-card industry-card-3">
+            <div class="industry-card-icon">🏠</div>
+            <h3>Real Estate</h3>
+            <p>Capture, qualify and follow up with every lead. Manage properties, clients and deals from a unified, intelligent platform.</p>
+            <a href="#">Explore Solutions →</a>
+          </article>
+          <article class="industry-card industry-card-4">
+            <div class="industry-card-icon">🏭</div>
+            <h3>SMEs & Manufacturing</h3>
+            <p>ERP, inventory, finance, HR and operations — everything you need to run and scale your business in one place.</p>
+            <a href="#">Explore Solutions →</a>
+          </article>
+          <article class="industry-card industry-card-5">
+            <div class="industry-card-icon">🛍️</div>
+            <h3>Retail & E-commerce</h3>
+            <p>Manage orders, inventory, customers and support with automation that improves experience and boosts revenue.</p>
+            <a href="#">Explore Solutions →</a>
+          </article>
+        </div>
+
+        <div class="industry-cta-row">
+          <div>
+            <p class="eyebrow">Your industry. Your challenges. Our solutions.</p>
+            <h2>Tell us about your business and we’ll show you how we can help you automate, optimize and grow.</h2>
+          </div>
+          <a class="hero-link" href="contact.html">Book a Strategy Call →</a>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    (function() {
+      var pages = ["company.html", "services.html", "industry.html", "products.html", "portfolio.html"];
+      var file = window.location.pathname.split("/").pop();
+      var current = pages.indexOf(file);
+      if (current === -1) return;
+      var lastScroll = 0;
+      var scrollDelta = 0;
+      var scrollTimeout = null;
+      function go(dir) {
+        var next = current + dir;
+        if (next >= 0 && next < pages.length) {
+          document.body.classList.add("fade-out");
+          setTimeout(function() {
+            window.location.href = pages[next];
+          }, 260);
+        }
+      }
+      function resetScroll() {
+        scrollDelta = 0;
+        scrollTimeout = null;
+      }
+      window.addEventListener("wheel", function(e) {
+        if (Date.now() - lastScroll < 800) return;
+        scrollDelta += e.deltaY;
+        if (Math.abs(scrollDelta) >= 280) {
+          lastScroll = Date.now();
+          go(scrollDelta > 0 ? 1 : -1);
+          resetScroll();
+          return;
+        }
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(resetScroll, 400);
+      }, { passive: true });
+      var touchStartY = 0;
+      window.addEventListener("touchstart", function(e) {
+        if (e.touches.length === 1) touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      window.addEventListener("touchend", function(e) {
+        var dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dy) < 160) return;
+        if (Date.now() - lastScroll < 800) return;
+        lastScroll = Date.now();
+        go(dy < 0 ? 1 : -1);
+      }, { passive: true });
+    })();
+  </script>
+</body>
+</html>
